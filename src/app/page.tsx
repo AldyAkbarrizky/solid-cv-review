@@ -1,103 +1,418 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import Footer from "@/components/layout/Footer";
+import Header from "@/components/layout/Header";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Brain,
+  CheckCircle,
+  Clock,
+  FileText,
+  Mail,
+  Shield,
+  Sparkles,
+  Star,
+  Target,
+  TrendingUp,
+  Users,
+  Zap,
+} from "lucide-react";
+import { motion } from "motion/react";
+import Link from "next/link";
+
+const fadeInUp = {
+  initial: { opacity: 0, y: 60 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6 },
+};
+
+const staggerContainer = {
+  animate: {
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const Home = () => {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="min-h-screen bg-cv-bg-primary">
+      <Header />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      {/* Hero Section */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-cv-accent/10 via-transparent to-cv-bg-primary"></div>
+        <div className="container-centered py-20 relative">
+          <motion.div
+            initial="initial"
+            animate="animate"
+            variants={staggerContainer}
+            className="max-w-5xl mx-auto text-center"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <motion.div variants={fadeInUp} className="mb-6">
+              <Badge
+                variant="secondary"
+                className="mb-4 px-4 py-2 text-cv-accent bg-cv-accent/10 border-cv-accent/20 gap-2"
+              >
+                <Sparkles className="w-4 h-4 text-cv-warning" />
+                Powered by Artificial Intelligence
+              </Badge>
+            </motion.div>
+
+            <motion.h1
+              variants={fadeInUp}
+              className="text-4xl md:text-6xl font-bold mb-6"
+            >
+              Optimasi CV Anda dengan{" "}
+              <span className="gradient-text">Kecerdasan Buatan</span>
+            </motion.h1>
+
+            <motion.p
+              variants={fadeInUp}
+              className="text-xl text-cv-text-secondary mb-8 max-w-2xl mx-auto leading-relaxed"
+            >
+              Dapatkan analisis mendalam tentang CV Anda dan tingkatkan peluang
+              lolos seleksi kerja. AI kami memberikan feedback konkret dalam
+              hitungan detik.
+            </motion.p>
+
+            <motion.div
+              variants={fadeInUp}
+              className="flex flex-col sm:flex-row gap-4 justify-center"
+            >
+              <Link href="/register">
+                <Button size="lg" className="btn-primary px-8 py-3 text-lg">
+                  Mulai Analisis Gratis
+                  <Zap className="ml-2 w-5 h-5" />
+                </Button>
+              </Link>
+              <Link href="/about">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="btn-secondary px-8 py-3 text-lg"
+                >
+                  Pelajari Lebih Lanjut
+                </Button>
+              </Link>
+            </motion.div>
+          </motion.div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-20">
+        <div className="container-centered">
+          <motion.div
+            initial="initial"
+            animate="animate"
+            variants={staggerContainer}
+            className="text-center mb-16"
+          >
+            <motion.h2
+              variants={fadeInUp}
+              className="text-3xl md:text-4xl font-bold mb-4"
+            >
+              Mengapa Memilih AI CV Review?
+            </motion.h2>
+            <motion.p
+              variants={fadeInUp}
+              className="text-cv-text-secondary text-lg max-w-3xl mx-auto"
+            >
+              Teknologi AI terdepan yang membantu Anda mendapatkan pekerjaan
+              impian
+            </motion.p>
+          </motion.div>
+
+          <motion.div
+            initial="initial"
+            animate="animate"
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          >
+            {[
+              {
+                icon: Brain,
+                title: "Analisis AI Cerdas",
+                description:
+                  "Algoritma machine learning yang menganalisis CV Anda terhadap ribuan job description untuk memberikan feedback yang tepat sasaran.",
+              },
+              {
+                icon: FileText,
+                title: "Ringkasan Profesional",
+                description:
+                  "AI membuat beberapa pilihan paragraf ringkasan profesional yang singkat dan berdampak untuk bagian atas CV Anda.",
+              },
+              {
+                icon: Mail,
+                title: "Generator Surat Lamaran",
+                description:
+                  "Buat draf surat lamaran yang personal dan persuasif dengan menggabungkan kekuatan CV Anda dengan requirement pekerjaan.",
+              },
+              {
+                icon: Target,
+                title: "Skor Kecocokan Real-time",
+                description:
+                  "Dapatkan skor 0-100 yang menunjukkan seberapa cocok CV Anda dengan posisi yang ditargetkan, lengkap dengan penjelasan detail.",
+              },
+              {
+                icon: Users,
+                title: "Persiapan Wawancara AI",
+                description:
+                  "Dapatkan pertanyaan wawancara yang disesuaikan dengan posisi, lengkap dengan panduan jawaban yang baik dan yang harus dihindari.",
+              },
+              {
+                icon: TrendingUp,
+                title: "Saran Perbaikan Konkret",
+                description:
+                  "Rekomendasi spesifik untuk meningkatkan CV Anda, dari keyword yang hilang hingga struktur yang lebih optimal.",
+              },
+              {
+                icon: Clock,
+                title: "Hasil Dalam 30 Detik",
+                description:
+                  "Tidak perlu menunggu lama. Analisis komprehensif CV Anda selesai dalam hitungan detik.",
+              },
+              {
+                icon: Shield,
+                title: "Data Aman & Privat",
+                description:
+                  "CV Anda tidak disimpan permanen. Kami hanya menggunakan data untuk sekali analisis dan kemudian menghapusnya.",
+              },
+              {
+                icon: Users,
+                title: "Dipercaya 10,000+ User",
+                description:
+                  "Bergabung dengan ribuan profesional yang telah meningkatkan karier mereka dengan bantuan AI kami.",
+              },
+            ].map((feature, index) => (
+              <motion.div key={index} variants={fadeInUp}>
+                <Card className="glass-card h-full hover:scale-105 transition-all duration-300 group">
+                  <CardHeader>
+                    <div className="w-12 h-12 bg-cv-accent/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-cv-accent/20 transition-colors">
+                      <feature.icon className="w-6 h-6 text-cv-accent" />
+                    </div>
+                    <CardTitle className="text-cv-text-primary">
+                      {feature.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-cv-text-secondary">
+                      {feature.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="py-20 bg-cv-bg-secondary/30">
+        <div className="container-centered">
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="text-center mb-16"
+          >
+            <motion.h2
+              variants={fadeInUp}
+              className="text-3xl md:text-4xl font-bold mb-4"
+            >
+              Cara Kerja Sederhana
+            </motion.h2>
+            <motion.p
+              variants={fadeInUp}
+              className="text-cv-text-secondary text-lg"
+            >
+              Hanya 3 langkah untuk mendapatkan feedback CV yang komprehensif
+            </motion.p>
+          </motion.div>
+
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          >
+            {[
+              {
+                step: "01",
+                title: "Upload CV",
+                description:
+                  "Unggah file CV Anda dalam format PDF atau DOCX. Proses upload cepat dan aman.",
+              },
+              {
+                step: "02",
+                title: "Input Job Description",
+                description:
+                  "Masukkan deskripsi pekerjaan yang Anda targetkan untuk analisis yang lebih akurat.",
+              },
+              {
+                step: "03",
+                title: "Dapatkan Feedback",
+                description:
+                  "Terima skor kecocokan dan feedback detail dalam 30 detik. Siap untuk diperbaiki!",
+              },
+            ].map((step, index) => (
+              <motion.div
+                key={index}
+                variants={fadeInUp}
+                className="text-center"
+              >
+                <div className="w-16 h-16 bg-cv-accent rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">
+                  {step.step}
+                </div>
+                <h3 className="text-xl font-semibold mb-4 text-cv-text-primary">
+                  {step.title}
+                </h3>
+                <p className="text-cv-text-secondary">{step.description}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20">
+        <div className="container-centered">
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="text-center mb-16"
+          >
+            <motion.h2
+              variants={fadeInUp}
+              className="text-3xl md:text-4xl font-bold mb-4"
+            >
+              Apa Kata Mereka?
+            </motion.h2>
+            <motion.p
+              variants={fadeInUp}
+              className="text-cv-text-secondary text-lg"
+            >
+              Testimoni dari para profesional yang telah merasakan manfaatnya
+            </motion.p>
+          </motion.div>
+
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          >
+            {[
+              {
+                name: "Sarah Wijaya",
+                role: "Software Engineer",
+                avatar: "/api/placeholder/60/60",
+                rating: 5,
+                comment:
+                  "Feedback dari AI CV Review sangat membantu! Saya berhasil lolos interview di 3 perusahaan tech setelah memperbaiki CV sesuai saran yang diberikan.",
+              },
+              {
+                name: "Budi Santoso",
+                role: "Marketing Manager",
+                avatar: "/api/placeholder/60/60",
+                rating: 5,
+                comment:
+                  "Skor kecocokan yang diberikan sangat akurat. Sekarang saya lebih percaya diri saat melamar kerja karena tahu CV saya sudah optimal.",
+              },
+              {
+                name: "Maya Kusuma",
+                role: "Data Analyst",
+                avatar: "/api/placeholder/60/60",
+                rating: 5,
+                comment:
+                  "Interface-nya user friendly dan hasilnya cepat. AI-nya benar-benar memahami apa yang dicari recruiter. Highly recommended!",
+              },
+            ].map((testimonial, index) => (
+              <motion.div key={index} variants={fadeInUp}>
+                <Card className="glass-card h-full">
+                  <CardContent className="p-6">
+                    <div className="flex items-center mb-4">
+                      <div className="w-12 h-12 bg-cv-accent/20 rounded-full flex items-center justify-center mr-4">
+                        <span className="text-cv-accent font-semibold text-lg">
+                          {testimonial.name
+                            .split(" ")
+                            .map((n) => n[0])
+                            .join("")}
+                        </span>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-cv-text-primary">
+                          {testimonial.name}
+                        </h4>
+                        <p className="text-sm text-cv-text-secondary">
+                          {testimonial.role}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex mb-4">
+                      {[...Array(testimonial.rating)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className="w-4 h-4 text-cv-warning fill-current"
+                        />
+                      ))}
+                    </div>
+                    <p className="text-cv-text-secondary italic">
+                      "{testimonial.comment}"
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-r from-cv-accent/10 via-cv-bg-secondary/50 to-cv-accent/10">
+        <div className="container-centered text-center">
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+          >
+            <motion.h2
+              variants={fadeInUp}
+              className="text-3xl md:text-4xl font-bold mb-4"
+            >
+              Siap Meningkatkan Peluang Karier Anda?
+            </motion.h2>
+            <motion.p
+              variants={fadeInUp}
+              className="text-cv-text-secondary text-lg mb-8 max-w-3xl mx-auto"
+            >
+              Bergabunglah dengan ribuan profesional yang telah mengoptimalkan
+              CV mereka dan mendapatkan pekerjaan impian.
+            </motion.p>
+            <motion.div variants={fadeInUp}>
+              <Link href="/register">
+                <Button size="lg" className="btn-primary px-8 py-3 text-lg">
+                  Mulai Gratis Sekarang
+                  <CheckCircle className="ml-2 w-5 h-5" />
+                </Button>
+              </Link>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      <Footer />
     </div>
   );
-}
+};
+
+export default Home;
