@@ -69,8 +69,33 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const refreshSession = useCallback(async () => {
     setIsCheckingAuth(true);
-    await loadSession();
-  }, [loadSession]);
+
+    const token = getAuthToken();
+    if (!token) {
+      setUser(null);
+      setIsCheckingAuth(false);
+      return null;
+    }
+
+    try {
+      const response = await authFetch("/settings/me");
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch profile");
+      }
+
+      const result = await response.json();
+      const userData = result.data?.user ?? null;
+      setUser(userData);
+      setIsCheckingAuth(false);
+      return userData;
+    } catch (error) {
+      console.error("Failed to load auth session:", error);
+      setUser(null);
+      setIsCheckingAuth(false);
+      return null;
+    }
+  }, []);
 
   const logout = useCallback(async () => {
     try {

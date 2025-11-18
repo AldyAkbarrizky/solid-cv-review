@@ -79,10 +79,13 @@ export default function LoginForm() {
           result?.data?.message || result.message || "Login berhasil!";
         toast.success(successMessage);
         setStatusMessage({ type: "success", text: successMessage });
-        await refreshSession();
-        const redirectTo = searchParams.get("from") || "/dashboard";
-        router.replace(redirectTo);
-        router.refresh();
+        const userData: any = await refreshSession();
+
+        if (userData) {
+          const redirectTo = searchParams.get("from") || "/dashboard";
+          router.replace(redirectTo);
+          router.refresh();
+        }
       } else {
         const errorMsg =
           result?.message || "Login gagal. Silakan cek kredensial Anda.";
