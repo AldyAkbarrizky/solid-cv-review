@@ -83,8 +83,9 @@ export default function LoginForm() {
 
         if (userData) {
           const redirectTo = searchParams.get("from") || "/dashboard";
-          router.replace(redirectTo);
-          router.refresh();
+          window.location.href = redirectTo;
+          // router.replace(redirectTo);
+          // router.refresh();
         }
       } else {
         const errorMsg =
