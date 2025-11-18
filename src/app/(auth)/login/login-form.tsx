@@ -81,7 +81,8 @@ export default function LoginForm() {
         setStatusMessage({ type: "success", text: successMessage });
         await refreshSession();
         const redirectTo = searchParams.get("from") || "/dashboard";
-        router.push(redirectTo);
+        router.replace(redirectTo);
+        router.refresh();
       } else {
         const errorMsg =
           result?.message || "Login gagal. Silakan cek kredensial Anda.";
