@@ -1,23 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { LogOut, User } from "lucide-react";
+import { motion } from "framer-motion";
+import { useAuth } from "@/context/auth-context";
 
-interface HeaderProps {
-  isLoggedIn?: boolean;
-  userName?: string;
-}
-
-const Header = ({ isLoggedIn = false, userName }: HeaderProps) => {
+const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isAuthenticated, isCheckingAuth, logout, user } = useAuth();
+
+  const handleLogout = async () => {
+    setIsMenuOpen(false);
+    await logout();
+  };
 
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
+    <header
       className="sticky top-0 z-50 w-full border-b border-cv-text-secondary/20 bg-cv-bg-primary/95 backdrop-blur supports-[backdrop-filter]:bg-cv-bg-primary/60"
     >
       <div className="container-centered flex h-16 items-center justify-between">
@@ -32,7 +32,9 @@ const Header = ({ isLoggedIn = false, userName }: HeaderProps) => {
         </Link>
 
         <nav className="hidden md:flex items-center space-x-6">
-          {isLoggedIn ? (
+          {isCheckingAuth ? (
+            <div className="h-8 w-32 rounded-full bg-cv-bg-secondary/60 animate-pulse" />
+          ) : isAuthenticated ? (
             <>
               <Link
                 href="/dashboard"
@@ -53,9 +55,14 @@ const Header = ({ isLoggedIn = false, userName }: HeaderProps) => {
                 Harga
               </Link>
               <div className="flex items-center space-x-3">
-                <span className="text-cv-text-secondary text-sm">
-                  Hai, {userName || "User"}
-                </span>
+                {user && !user.emailVerified && (
+                  <Link
+                    href="/verify-email?status=pending"
+                    className="px-3 py-1 text-xs rounded-full bg-cv-warning/10 text-cv-warning border border-cv-warning/30"
+                  >
+                    Verifikasi email
+                  </Link>
+                )}
                 <Link href="/settings">
                   <Button
                     variant="ghost"
@@ -69,6 +76,7 @@ const Header = ({ isLoggedIn = false, userName }: HeaderProps) => {
                   variant="ghost"
                   size="sm"
                   className="text-cv-text-secondary hover:text-cv-error"
+                  onClick={handleLogout}
                 >
                   <LogOut className="w-4 h-4" />
                 </Button>
@@ -130,15 +138,26 @@ const Header = ({ isLoggedIn = false, userName }: HeaderProps) => {
 
       {/* Mobile menu */}
       {isMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-          exit={{ opacity: 0, height: 0 }}
+        <div
           className="md:hidden border-t border-cv-text-secondary/20 bg-cv-bg-secondary"
         >
           <div className="container-centered py-4 space-y-4">
-            {isLoggedIn ? (
+            {isCheckingAuth ? (
+              <p className="text-cv-text-secondary">Memuat...</p>
+            ) : isAuthenticated ? (
               <>
+                {user && !user.emailVerified && (
+                  <div className="p-3 rounded-lg border border-cv-warning/40 bg-cv-warning/10 text-sm text-cv-warning">
+                    Email Anda belum diverifikasi.{" "}
+                    <Link
+                      href="/verify-email?status=pending"
+                      className="underline"
+                    >
+                      Verifikasi sekarang
+                    </Link>
+                    .
+                  </div>
+                )}
                 <Link
                   href="/dashboard"
                   className="block text-cv-text-secondary hover:text-cv-text-primary transition-colors"
@@ -163,6 +182,12 @@ const Header = ({ isLoggedIn = false, userName }: HeaderProps) => {
                 >
                   Pengaturan
                 </Link>
+                <button
+                  onClick={handleLogout}
+                  className="block w-full text-left text-cv-error hover:text-cv-error/80 transition-colors"
+                >
+                  Logout
+                </button>
               </>
             ) : (
               <>
@@ -190,9 +215,9 @@ const Header = ({ isLoggedIn = false, userName }: HeaderProps) => {
               </>
             )}
           </div>
-        </motion.div>
+        </div>
       )}
-    </motion.header>
+    </header>
   );
 };
 

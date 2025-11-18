@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Solid CV Review – Frontend
 
-## Getting Started
+Solid CV Review adalah aplikasi Next.js 16 yang membantu pengguna menilai, memperbaiki,
+dan menyiapkan dokumen lamaran kerja. Repositori frontend ini berisi seluruh UI/UX untuk
+landing page, dashboard analisis, generator ringkasan, cover letter, hingga interview prep.
 
-First, run the development server:
+### 🧱 Tech Stack
+
+- Next.js App Router + TypeScript
+- Tailwind (custom design system `cv-*`)
+- React Query–style hooks (manual) + custom Auth context
+- React PDF untuk export laporan
+- Lucide-icons, Framer Motion, js-cookie
+
+### 🚀 Menjalankan Aplikasi
 
 ```bash
+cd solid-cv
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# buka http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### Environment variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Buat `.env.local`:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+NEXT_PUBLIC_API_URL=http://localhost:8000/api
+```
 
-## Learn More
+### ✨ Highlight Fitur
 
-To learn more about Next.js, take a look at the following resources:
+- **Autentikasi & verifikasi email**
+  - Form register/login, email verification flow dengan halaman khusus.
+  - Guard global untuk membatasi akses dashboard sebelum email terverifikasi.
+- **Dashboard analisis CV**
+  - Menampilkan skor keseluruhan, detail section, riwayat, rekomendasi, dsb.
+  - Ekspor laporan PDF bergaya sama dengan UI menggunakan React PDF.
+- **Generator**: summary, cover letter (dummy UI untuk backend endpoints).
+- **Interview Prep**
+  - Komponen `QuestionDetail` menampilkan jawaban baik/buruk secara visual.
+- **UI sistem**
+  - Header responsif, glass-card utilities, theme warning banners, dsb.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### ✅ Checklist Frontend
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- [x] Landing page dan CTA
+- [x] Flow registrasi + verifikasi email (pending/success/error/resend)
+- [x] Auth context + refresh token integration
+- [x] Dashboard guard (hanya pengguna terverifikasi)
+- [x] Laporan PDF dengan styling menyerupai halaman detail
+- [x] History list + tombol download
+- [x] Interview prep UI (good vs bad answer)
+- [ ] Integrasi upload CV & analisis nyata (saat ini dummy data)
+- [ ] Pembayaran & aktivasi paket Pro
+- [ ] Push notification / email preference UI detail
 
-## Deploy on Vercel
+### 📁 Struktur Penting
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `src/app/(auth)` – halaman login/register/verify email
+- `src/app/(dashboard)` – area privat (dashboard, history, interview, dll.)
+- `src/context/auth-context.tsx` – sumber kebenaran status user
+- `src/components/auth/email-verification-guard.tsx` – guard halaman privat
+- `src/pdf/analysis-report.tsx` – template React PDF
+- `src/lib/pdf.tsx` – helper download laporan
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 🧪 Testing
+
+Belum ada pengaturan automated test. Gunakan `npm run lint` untuk memastikan konsistensi, dan uji manual halaman yang berdampak (register/login/dashboard/pdf).
+
+---
+
+Lihat juga README backend (`solid-cv-be/README.md`) untuk setup API/DB. Pastikan backend sudah berjalan dan memiliki tabel terbaru (termasuk kolom verifikasi email) sebelum menjalankan frontend.

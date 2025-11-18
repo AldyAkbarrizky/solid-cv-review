@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "motion/react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -25,12 +24,6 @@ import {
   Settings,
 } from "lucide-react";
 import Link from "next/link";
-
-const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5 },
-};
 
 export default function FAQ() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -190,34 +183,23 @@ export default function FAQ() {
 
       <div className="container mx-auto px-4 py-20">
         {/* Header */}
-        <motion.div
-          initial="initial"
-          animate="animate"
-          variants={{
-            animate: {
-              transition: {
-                staggerChildren: 0.1,
-              },
-            },
-          }}
+        <div
           className="text-center mb-16"
         >
-          <motion.h1
-            variants={fadeInUp}
+          <h1
             className="text-4xl md:text-5xl font-bold mb-6"
           >
             Frequently Asked <span className="gradient-text">Questions</span>
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            variants={fadeInUp}
+          <p
             className="text-xl text-cv-text-secondary max-w-2xl mx-auto mb-8"
           >
             Temukan jawaban lengkap untuk semua pertanyaan tentang AI CV Review
-          </motion.p>
+          </p>
 
           {/* Search Bar */}
-          <motion.div variants={fadeInUp} className="max-w-md mx-auto">
+          <div className="max-w-md mx-auto">
             <div className="relative">
               <Search className="absolute left-3 top-3 h-4 w-4 text-cv-text-secondary" />
               <Input
@@ -227,15 +209,12 @@ export default function FAQ() {
                 className="pl-10 bg-cv-bg-secondary border-cv-text-secondary/30 text-cv-text-primary placeholder:text-cv-text-secondary/50"
               />
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         <div className="max-w-6xl mx-auto">
           {/* Category Filter */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
+          <div
             className="mb-8"
           >
             <div className="flex flex-wrap gap-2 justify-center">
@@ -257,14 +236,10 @@ export default function FAQ() {
                 </Button>
               ))}
             </div>
-          </motion.div>
+          </div>
 
           {/* FAQ List */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-          >
+          <div>
             {filteredFaqs.length === 0 ? (
               <Card className="glass-card">
                 <CardContent className="p-12 text-center">
@@ -325,14 +300,10 @@ export default function FAQ() {
                 </CardContent>
               </Card>
             )}
-          </motion.div>
+          </div>
 
           {/* Still Need Help */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.6 }}
+          <div
             className="mt-16"
           >
             <Card className="glass-card">
@@ -372,7 +343,7 @@ export default function FAQ() {
                 </div>
               </CardContent>
             </Card>
-          </motion.div>
+          </div>
         </div>
       </div>
 

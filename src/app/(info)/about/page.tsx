@@ -1,16 +1,9 @@
 "use client";
 
-import { motion } from "motion/react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Brain, Shield, Target, Users, Clock, Award } from "lucide-react";
-
-const fadeInUp = {
-  initial: { opacity: 0, y: 60 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6 },
-};
 
 export default function About() {
   return (
@@ -20,34 +13,23 @@ export default function About() {
       {/* Hero Section */}
       <section className="py-20">
         <div className="container-centered">
-          <motion.div
-            initial="initial"
-            animate="animate"
-            variants={{
-              animate: {
-                transition: {
-                  staggerChildren: 0.1,
-                },
-              },
-            }}
+          <div
             className="text-center mb-16"
           >
-            <motion.h1
-              variants={fadeInUp}
+            <h1
               className="text-4xl md:text-5xl font-bold mb-6"
             >
               Tentang <span className="gradient-text">AI CV Review</span>
-            </motion.h1>
+            </h1>
 
-            <motion.p
-              variants={fadeInUp}
+            <p
               className="text-xl text-cv-text-secondary max-w-3xl mx-auto leading-relaxed"
             >
               Kami adalah platform AI terdepan yang membantu para pencari kerja
               mengoptimalkan CV mereka dan meningkatkan peluang lolos seleksi di
               perusahaan impian.
-            </motion.p>
-          </motion.div>
+            </p>
+          </div>
         </div>
       </section>
 
@@ -55,11 +37,7 @@ export default function About() {
       <section className="py-20 bg-cv-bg-secondary/30">
         <div className="container-wide">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
+            <div>
               <Card className="glass-card h-full">
                 <CardHeader>
                   <CardTitle className="text-2xl font-bold text-cv-text-primary flex items-center gap-3">
@@ -76,14 +54,9 @@ export default function About() {
                   </p>
                 </CardContent>
               </Card>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-            >
+            <div>
               <Card className="glass-card h-full">
                 <CardHeader>
                   <CardTitle className="text-2xl font-bold text-cv-text-primary flex items-center gap-3">
@@ -99,7 +72,7 @@ export default function About() {
                   </p>
                 </CardContent>
               </Card>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -107,10 +80,7 @@ export default function About() {
       {/* Why Choose Us */}
       <section className="py-20">
         <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+          <div
             className="text-center mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold text-cv-text-primary mb-4">
@@ -119,7 +89,7 @@ export default function About() {
             <p className="text-cv-text-secondary text-lg max-w-2xl mx-auto">
               Teknologi terdepan dan pengalaman yang tidak tertandingi
             </p>
-          </motion.div>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {[
@@ -160,12 +130,8 @@ export default function About() {
                   "Setiap feedback disesuaikan dengan industri, level karier, dan target posisi yang spesifik.",
               },
             ].map((feature, index) => (
-              <motion.div
+              <div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
               >
                 <Card className="glass-card h-full text-center group hover:scale-105 transition-all duration-300">
                   <CardHeader>
@@ -182,7 +148,7 @@ export default function About() {
                     </p>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -191,10 +157,7 @@ export default function About() {
       {/* Technology Stack */}
       <section className="py-20 bg-cv-bg-secondary/30">
         <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+          <div
             className="text-center mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold text-cv-text-primary mb-4">
@@ -203,14 +166,9 @@ export default function About() {
             <p className="text-cv-text-secondary text-lg max-w-2xl mx-auto">
               Powered by cutting-edge AI and modern web technologies
             </p>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-          >
+          <div>
             <Card className="glass-card max-w-4xl mx-auto">
               <CardContent className="p-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -239,17 +197,14 @@ export default function About() {
                 </div>
               </CardContent>
             </Card>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Privacy & Security */}
       <section className="py-20">
         <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+          <div
             className="text-center mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold text-cv-text-primary mb-4">
@@ -258,14 +213,10 @@ export default function About() {
             <p className="text-cv-text-secondary text-lg max-w-2xl mx-auto">
               Komitmen kami terhadap keamanan dan privasi data Anda
             </p>
-          </motion.div>
+          </div>
 
           <div className="max-w-4xl mx-auto space-y-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
+            <div>
               <Card className="glass-card">
                 <CardHeader>
                   <CardTitle className="text-cv-text-primary flex items-center gap-3">
@@ -282,14 +233,9 @@ export default function About() {
                   </p>
                 </CardContent>
               </Card>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-            >
+            <div>
               <Card className="glass-card">
                 <CardHeader>
                   <CardTitle className="text-cv-text-primary flex items-center gap-3">
@@ -305,14 +251,9 @@ export default function About() {
                   </p>
                 </CardContent>
               </Card>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-            >
+            <div>
               <Card className="glass-card">
                 <CardHeader>
                   <CardTitle className="text-cv-text-primary flex items-center gap-3">
@@ -328,7 +269,7 @@ export default function About() {
                   </p>
                 </CardContent>
               </Card>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -336,10 +277,7 @@ export default function About() {
       {/* Contact */}
       <section className="py-20 bg-cv-bg-secondary/30">
         <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+          <div
             className="text-center mb-12"
           >
             <h2 className="text-3xl font-bold text-cv-text-primary mb-4">
@@ -348,13 +286,9 @@ export default function About() {
             <p className="text-cv-text-secondary">
               Ada pertanyaan? Kami siap membantu Anda
             </p>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
+          <div
             className="max-w-2xl mx-auto"
           >
             <Card className="glass-card">
@@ -383,7 +317,7 @@ export default function About() {
                 </div>
               </CardContent>
             </Card>
-          </motion.div>
+          </div>
         </div>
       </section>
 

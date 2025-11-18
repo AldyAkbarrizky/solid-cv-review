@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "motion/react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -20,16 +19,12 @@ import {
   Users,
 } from "lucide-react";
 import Link from "next/link";
-
-const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5 },
-};
+import { downloadAnalysisPdf } from "@/lib/pdf";
 
 export default function History() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterScore, setFilterScore] = useState("all");
+  const [downloadingId, setDownloadingId] = useState<number | null>(null);
 
   // Mock data untuk riwayat analisis
   const analysisHistory = [
@@ -127,38 +122,25 @@ export default function History() {
 
   return (
     <div className="min-h-screen bg-cv-bg-primary">
-      <Header isLoggedIn={true} userName="John Doe" />
+      <Header />
 
       <div className="container-centered py-8">
         {/* Header Section */}
-        <motion.div
-          initial="initial"
-          animate="animate"
-          variants={{
-            animate: {
-              transition: {
-                staggerChildren: 0.1,
-              },
-            },
-          }}
+        <div
           className="mb-8"
         >
-          <motion.h1
-            variants={fadeInUp}
+          <h1
             className="text-3xl font-bold text-cv-text-primary mb-2"
           >
             Riwayat Analisis CV
-          </motion.h1>
-          <motion.p variants={fadeInUp} className="text-cv-text-secondary">
+          </h1>
+          <p className="text-cv-text-secondary">
             Lihat semua analisis CV yang pernah Anda lakukan
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
         {/* Search and Filter */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
+        <div
           className="mb-6"
         >
           <Card className="glass-card">
@@ -209,13 +191,10 @@ export default function History() {
               </div>
             </CardContent>
           </Card>
-        </motion.div>
+        </div>
 
         {/* Statistics Cards */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
+        <div
           className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
         >
           <Card className="glass-card">
@@ -247,13 +226,10 @@ export default function History() {
               <p className="text-cv-text-secondary">Skor Excellent</p>
             </CardContent>
           </Card>
-        </motion.div>
+        </div>
 
         {/* History List */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
+        <div
           className="space-y-4"
         >
           {filteredHistory.length === 0 ? (
@@ -270,11 +246,8 @@ export default function History() {
             </Card>
           ) : (
             filteredHistory.map((item, index) => (
-              <motion.div
+              <div
                 key={item.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 * index }}
               >
                 <Card className="glass-card hover:scale-[1.02] transition-all duration-300 group">
                   <CardContent className="p-6">
@@ -363,9 +336,31 @@ export default function History() {
                           variant="outline"
                           size="sm"
                           className="btn-secondary"
+                          disabled={downloadingId === item.id}
+                          onClick={async () => {
+                            setDownloadingId(item.id);
+                            try {
+                              await downloadAnalysisPdf(
+                                {
+                                  jobTitle: item.jobTitle,
+                                  company: item.company,
+                                  date: item.date,
+                                  score: item.score,
+                                  cvFileName: item.cvFileName,
+                                  summary: `Ringkasan hasil analisis CV untuk posisi ${item.jobTitle} di ${item.company}.`,
+                                },
+                                `Hasil_Analisis_${item.jobTitle.replace(
+                                  /[\\/:*?"<>|]/g,
+                                  "_"
+                                )}.pdf`
+                              );
+                            } finally {
+                              setDownloadingId(null);
+                            }
+                          }}
                         >
                           <Download className="w-4 h-4 mr-2" />
-                          Download
+                          {downloadingId === item.id ? "Memproses..." : "Download"}
                         </Button>
                         <Button
                           variant="outline"
@@ -378,18 +373,14 @@ export default function History() {
                     </div>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </div>
             ))
           )}
-        </motion.div>
+        </div>
 
         {/* Empty State for New Users */}
         {analysisHistory.length === 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-          >
+          <div>
             <Card className="glass-card">
               <CardContent className="p-12 text-center">
                 <FileText className="w-24 h-24 text-cv-text-secondary mx-auto mb-6" />
@@ -408,7 +399,7 @@ export default function History() {
                 </Link>
               </CardContent>
             </Card>
-          </motion.div>
+          </div>
         )}
       </div>
 

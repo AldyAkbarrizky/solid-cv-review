@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import {
   Card,
   CardContent,
@@ -39,12 +38,6 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import Link from "next/link";
-
-const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5 },
-};
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -118,43 +111,28 @@ export default function Contact() {
       <main className="flex-grow">
         <div className="container-centered py-20">
           {/* Header */}
-          <motion.div
-            initial="initial"
-            animate="animate"
-            variants={{
-              animate: {
-                transition: {
-                  staggerChildren: 0.1,
-                },
-              },
-            }}
+          <div
             className="text-center mb-16"
           >
-            <motion.h1
-              variants={fadeInUp}
+            <h1
               className="text-4xl md:text-5xl font-bold mb-6"
             >
               Hubungi <span className="gradient-text">Tim Kami</span>
-            </motion.h1>
+            </h1>
 
-            <motion.p
-              variants={fadeInUp}
+            <p
               className="text-xl text-cv-text-secondary max-w-3xl mx-auto leading-relaxed"
             >
               Ada pertanyaan, masalah, atau saran? Tim support kami siap
               membantu Anda 24/7. Pilih cara komunikasi yang paling nyaman untuk
               Anda.
-            </motion.p>
-          </motion.div>
+            </p>
+          </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Contact Form */}
             <div className="lg:col-span-2">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2 }}
-              >
+              <div>
                 <Card className="glass-card">
                   <CardHeader>
                     <CardTitle className="text-cv-text-primary text-2xl">
@@ -300,17 +278,13 @@ export default function Contact() {
                     </form>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </div>
             </div>
 
             {/* Contact Methods & Info */}
             <div className="space-y-8">
               {/* Contact Methods */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3 }}
-              >
+              <div>
                 <Card className="glass-card">
                   <CardHeader>
                     <CardTitle className="text-cv-text-primary">
@@ -346,14 +320,10 @@ export default function Contact() {
                     ))}
                   </CardContent>
                 </Card>
-              </motion.div>
+              </div>
 
               {/* Office Info */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.4 }}
-              >
+              <div>
                 <Card className="glass-card">
                   <CardHeader>
                     <CardTitle className="text-cv-text-primary">
@@ -389,7 +359,7 @@ export default function Contact() {
                     </div>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </div>
             </div>
           </div>
         </div>

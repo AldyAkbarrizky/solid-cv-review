@@ -3,7 +3,7 @@
 import { Suspense } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import AnalysisDetailContent from "./analysis-detail";
+import ResetPasswordForm from "./form";
 
 function Loading() {
   return (
@@ -13,13 +13,15 @@ function Loading() {
   );
 }
 
-export default function AnalysisDetailPage() {
+export default function ResetPasswordPage() {
   return (
-    <div className="flex flex-col min-h-screen bg-cv-bg-primary">
+    <div className="flex min-h-screen flex-col bg-cv-bg-primary">
       <Header />
-      <Suspense fallback={<Loading />}>
-        <AnalysisDetailContent />
-      </Suspense>
+      <main className="flex flex-1 items-center justify-center px-4 py-12">
+        <Suspense fallback={<Loading />}>
+          <ResetPasswordForm />
+        </Suspense>
+      </main>
       <Footer />
     </div>
   );

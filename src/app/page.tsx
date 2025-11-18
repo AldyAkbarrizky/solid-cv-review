@@ -19,22 +19,7 @@ import {
   Users,
   Zap,
 } from "lucide-react";
-import { motion } from "motion/react";
 import Link from "next/link";
-
-const fadeInUp = {
-  initial: { opacity: 0, y: 60 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6 },
-};
-
-const staggerContainer = {
-  animate: {
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
 
 const Home = () => {
   return (
@@ -45,13 +30,8 @@ const Home = () => {
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-cv-accent/10 via-transparent to-cv-bg-primary"></div>
         <div className="container-centered py-20 relative">
-          <motion.div
-            initial="initial"
-            animate="animate"
-            variants={staggerContainer}
-            className="max-w-5xl mx-auto text-center"
-          >
-            <motion.div variants={fadeInUp} className="mb-6">
+          <div className="max-w-5xl mx-auto text-center">
+            <div className="mb-6">
               <Badge
                 variant="secondary"
                 className="mb-4 px-4 py-2 text-cv-accent bg-cv-accent/10 border-cv-accent/20 gap-2"
@@ -59,29 +39,23 @@ const Home = () => {
                 <Sparkles className="w-4 h-4 text-cv-warning" />
                 Powered by Artificial Intelligence
               </Badge>
-            </motion.div>
+            </div>
 
-            <motion.h1
-              variants={fadeInUp}
-              className="text-4xl md:text-6xl font-bold mb-6"
-            >
+            <h1 className="text-4xl md:text-6xl font-bold mb-6">
               Optimasi CV Anda dengan{" "}
-              <span className="gradient-text">Kecerdasan Buatan</span>
-            </motion.h1>
+              <span className="gradient-text">
+                <br />
+                Artificial Intelligence
+              </span>
+            </h1>
 
-            <motion.p
-              variants={fadeInUp}
-              className="text-xl text-cv-text-secondary mb-8 max-w-2xl mx-auto leading-relaxed"
-            >
+            <p className="text-xl text-cv-text-secondary mb-8 max-w-2xl mx-auto leading-relaxed">
               Dapatkan analisis mendalam tentang CV Anda dan tingkatkan peluang
               lolos seleksi kerja. AI kami memberikan feedback konkret dalam
               hitungan detik.
-            </motion.p>
+            </p>
 
-            <motion.div
-              variants={fadeInUp}
-              className="flex flex-col sm:flex-row gap-4 justify-center"
-            >
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/register">
                 <Button size="lg" className="btn-primary px-8 py-3 text-lg">
                   Mulai Analisis Gratis
@@ -97,41 +71,25 @@ const Home = () => {
                   Pelajari Lebih Lanjut
                 </Button>
               </Link>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Features Section */}
       <section className="py-20">
         <div className="container-centered">
-          <motion.div
-            initial="initial"
-            animate="animate"
-            variants={staggerContainer}
-            className="text-center mb-16"
-          >
-            <motion.h2
-              variants={fadeInUp}
-              className="text-3xl md:text-4xl font-bold mb-4"
-            >
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Mengapa Memilih AI CV Review?
-            </motion.h2>
-            <motion.p
-              variants={fadeInUp}
-              className="text-cv-text-secondary text-lg max-w-3xl mx-auto"
-            >
+            </h2>
+            <p className="text-cv-text-secondary text-lg max-w-3xl mx-auto">
               Teknologi AI terdepan yang membantu Anda mendapatkan pekerjaan
               impian
-            </motion.p>
-          </motion.div>
+            </p>
+          </div>
 
-          <motion.div
-            initial="initial"
-            animate="animate"
-            variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
                 icon: Brain,
@@ -188,7 +146,7 @@ const Home = () => {
                   "Bergabung dengan ribuan profesional yang telah meningkatkan karier mereka dengan bantuan AI kami.",
               },
             ].map((feature, index) => (
-              <motion.div key={index} variants={fadeInUp}>
+              <div key={index}>
                 <Card className="glass-card h-full hover:scale-105 transition-all duration-300 group">
                   <CardHeader>
                     <div className="w-12 h-12 bg-cv-accent/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-cv-accent/20 transition-colors">
@@ -204,43 +162,25 @@ const Home = () => {
                     </p>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* How It Works Section */}
       <section className="py-20 bg-cv-bg-secondary/30">
         <div className="container-centered">
-          <motion.div
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-            className="text-center mb-16"
-          >
-            <motion.h2
-              variants={fadeInUp}
-              className="text-3xl md:text-4xl font-bold mb-4"
-            >
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Cara Kerja Sederhana
-            </motion.h2>
-            <motion.p
-              variants={fadeInUp}
-              className="text-cv-text-secondary text-lg"
-            >
+            </h2>
+            <p className="text-cv-text-secondary text-lg">
               Hanya 3 langkah untuk mendapatkan feedback CV yang komprehensif
-            </motion.p>
-          </motion.div>
+            </p>
+          </div>
 
-          <motion.div
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
                 step: "01",
@@ -261,11 +201,7 @@ const Home = () => {
                   "Terima skor kecocokan dan feedback detail dalam 30 detik. Siap untuk diperbaiki!",
               },
             ].map((step, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInUp}
-                className="text-center"
-              >
+              <div key={index} className="text-center">
                 <div className="w-16 h-16 bg-cv-accent rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">
                   {step.step}
                 </div>
@@ -273,43 +209,25 @@ const Home = () => {
                   {step.title}
                 </h3>
                 <p className="text-cv-text-secondary">{step.description}</p>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Testimonials Section */}
       <section className="py-20">
         <div className="container-centered">
-          <motion.div
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-            className="text-center mb-16"
-          >
-            <motion.h2
-              variants={fadeInUp}
-              className="text-3xl md:text-4xl font-bold mb-4"
-            >
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Apa Kata Mereka?
-            </motion.h2>
-            <motion.p
-              variants={fadeInUp}
-              className="text-cv-text-secondary text-lg"
-            >
+            </h2>
+            <p className="text-cv-text-secondary text-lg">
               Testimoni dari para profesional yang telah merasakan manfaatnya
-            </motion.p>
-          </motion.div>
+            </p>
+          </div>
 
-          <motion.div
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
                 name: "Sarah Wijaya",
@@ -336,7 +254,7 @@ const Home = () => {
                   "Interface-nya user friendly dan hasilnya cepat. AI-nya benar-benar memahami apa yang dicari recruiter. Highly recommended!",
               },
             ].map((testimonial, index) => (
-              <motion.div key={index} variants={fadeInUp}>
+              <div key={index}>
                 <Card className="glass-card h-full">
                   <CardContent className="p-6">
                     <div className="flex items-center mb-4">
@@ -370,43 +288,32 @@ const Home = () => {
                     </p>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-cv-accent/10 via-cv-bg-secondary/50 to-cv-accent/10">
         <div className="container-centered text-center">
-          <motion.div
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-          >
-            <motion.h2
-              variants={fadeInUp}
-              className="text-3xl md:text-4xl font-bold mb-4"
-            >
+          <div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Siap Meningkatkan Peluang Karier Anda?
-            </motion.h2>
-            <motion.p
-              variants={fadeInUp}
-              className="text-cv-text-secondary text-lg mb-8 max-w-3xl mx-auto"
-            >
+            </h2>
+            <p className="text-cv-text-secondary text-lg mb-8 max-w-3xl mx-auto">
               Bergabunglah dengan ribuan profesional yang telah mengoptimalkan
               CV mereka dan mendapatkan pekerjaan impian.
-            </motion.p>
-            <motion.div variants={fadeInUp}>
+            </p>
+            <div>
               <Link href="/register">
                 <Button size="lg" className="btn-primary px-8 py-3 text-lg">
                   Mulai Gratis Sekarang
                   <CheckCircle className="ml-2 w-5 h-5" />
                 </Button>
               </Link>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
       </section>
 

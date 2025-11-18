@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "motion/react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -28,6 +27,8 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { useDropzone } from "react-dropzone";
+import Link from "next/link";
+import { useAuth } from "@/context/auth-context";
 
 export default function Dashboard() {
   const [cvFile, setCvFile] = useState<File | null>(null);
@@ -35,6 +36,8 @@ export default function Dashboard() {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisResult, setAnalysisResult] = useState<any>(null);
   const [analysisProgress, setAnalysisProgress] = useState(0);
+  const [userName, setUserName] = useState("Pengguna");
+  const { user } = useAuth();
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: {
@@ -53,6 +56,15 @@ export default function Dashboard() {
       toast.error("Format file tidak didukung. Gunakan PDF atau DOCX.");
     },
   });
+
+  useEffect(() => {
+    if (!user?.name) {
+      return;
+    }
+    const fullName = user.name.trim();
+    const firstName = fullName.split(" ")[0] || fullName;
+    setUserName(firstName);
+  }, [user]);
 
   const handleAnalyze = async () => {
     if (!cvFile) {
@@ -111,17 +123,15 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-cv-bg-primary">
-      <Header isLoggedIn={true} userName="John Doe" />
+      <Header />
 
       <div className="container-centered py-8">
         {/* Welcome Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+        <div
           className="mb-8"
         >
           <h1 className="text-3xl font-bold text-cv-text-primary mb-2">
-            Selamat datang, John! 👋
+            Selamat datang, {userName}! 👋
           </h1>
           <p className="text-cv-text-secondary">
             Status:{" "}
@@ -129,16 +139,12 @@ export default function Dashboard() {
               Akun Gratis
             </Badge>
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Analysis Section */}
           <div className="lg:col-span-2 space-y-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-            >
+            <div>
               <Card className="glass-card">
                 <CardHeader>
                   <CardTitle className="text-cv-text-primary flex items-center gap-2">
@@ -237,13 +243,11 @@ export default function Dashboard() {
                   )}
                 </CardContent>
               </Card>
-            </motion.div>
+            </div>
 
             {/* Analysis Results */}
             {analysisResult && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+              <div
                 className="space-y-6"
               >
                 {/* Score Card */}
@@ -419,17 +423,13 @@ export default function Dashboard() {
                     Simpan ke Riwayat
                   </Button>
                 </div>
-              </motion.div>
+              </div>
             )}
           </div>
 
           {/* Sidebar */}
           <div className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2 }}
-            >
+            <div>
               <Card className="glass-card">
                 <CardHeader>
                   <CardTitle className="text-cv-text-primary">
@@ -438,28 +438,30 @@ export default function Dashboard() {
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <Button
+                    asChild
                     variant="outline"
                     className="w-full btn-secondary justify-start"
                   >
-                    <History className="w-4 h-4 mr-2" />
-                    Lihat Riwayat
+                    <Link href="/history" className="flex w-full items-center">
+                      <History className="w-4 h-4 mr-2" />
+                      Lihat Riwayat
+                    </Link>
                   </Button>
                   <Button
+                    asChild
                     variant="outline"
                     className="w-full btn-secondary justify-start"
                   >
-                    <TrendingUp className="w-4 h-4 mr-2" />
-                    Upgrade ke Pro
+                    <Link href="/pricing" className="flex w-full items-center">
+                      <TrendingUp className="w-4 h-4 mr-2" />
+                      Upgrade ke Pro
+                    </Link>
                   </Button>
                 </CardContent>
               </Card>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3 }}
-            >
+            <div>
               <Card className="glass-card">
                 <CardHeader>
                   <CardTitle className="text-cv-text-primary">
@@ -474,7 +476,7 @@ export default function Dashboard() {
                   </p>
                 </CardContent>
               </Card>
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>

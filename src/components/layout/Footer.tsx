@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Link from "next/link";
 
 const Footer = () => {
@@ -8,10 +7,7 @@ const Footer = () => {
     <footer className="border-t border-cv-text-secondary/20 bg-cv-bg-secondary/50">
       <div className="container-centered py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+          <div
             className="space-y-4"
           >
             <h3 className="text-lg font-semibold gradient-text">
@@ -21,13 +17,9 @@ const Footer = () => {
               Asisten karier cerdas berbasis AI untuk mengoptimalkan CV Anda dan
               meningkatkan peluang lolos seleksi kerja.
             </p>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
+          <div
             className="space-y-4"
           >
             <h4 className="font-medium text-cv-text-primary">Produk</h4>
@@ -51,13 +43,9 @@ const Footer = () => {
                 Riwayat Analisis
               </Link>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
+          <div
             className="space-y-4"
           >
             <h4 className="font-medium text-cv-text-primary">Perusahaan</h4>
@@ -81,13 +69,9 @@ const Footer = () => {
                 Kontak
               </Link>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
+          <div
             className="space-y-4"
           >
             <h4 className="font-medium text-cv-text-primary">Dukungan</h4>
@@ -111,20 +95,16 @@ const Footer = () => {
                 Pengaturan Akun
               </Link>
             </div>
-          </motion.div>
+          </div>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
+        <div
           className="mt-8 pt-8 border-t border-cv-text-secondary/20 text-center"
         >
           <p className="text-cv-text-secondary text-sm">
             © 2025 AI CV Review. Semua hak dilindungi undang-undang.
           </p>
-        </motion.div>
+        </div>
       </div>
     </footer>
   );

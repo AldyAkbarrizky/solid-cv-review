@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -22,17 +21,66 @@ export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isEmailSent, setIsEmailSent] = useState(false);
+  const [statusMessage, setStatusMessage] = useState<{
+    type: "success" | "error" | "info";
+    text: string;
+  } | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
 
-    // Simulate API call
-    setTimeout(() => {
-      setIsEmailSent(true);
-      toast.success("Email reset password telah dikirim!");
+    if (!email) {
+      toast.error("Email wajib diisi.");
+      setStatusMessage({
+        type: "error",
+        text: "Harap isi email Anda terlebih dahulu.",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+    setStatusMessage({
+      type: "info",
+      text: "Sedang mengirim instruksi reset password...",
+    });
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/forgotPassword`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        }
+      );
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setIsEmailSent(true);
+        const msg =
+          result?.data?.message || "Email reset password telah dikirim!";
+        toast.success(msg);
+        setStatusMessage({ type: "success", text: msg });
+      } else {
+        const msg =
+          result?.message || "Gagal mengirim email reset password.";
+        toast.error(msg);
+        setStatusMessage({ type: "error", text: msg });
+      }
+    } catch (error) {
+      console.error("Error sending reset email:", error);
+      const msg = "Terjadi kesalahan. Silakan coba lagi.";
+      toast.error(msg);
+      setStatusMessage({ type: "error", text: msg });
+    } finally {
       setIsLoading(false);
-    }, 2000);
+      setStatusMessage((current) =>
+        current?.type === "info" ? null : current
+      );
+    }
   };
 
   if (isEmailSent) {
@@ -41,14 +89,22 @@ export default function ForgotPassword() {
         <Header />
 
         <div className="container mx-auto px-4 py-20">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+          <div
             className="max-w-md mx-auto"
           >
             <Card className="glass-card">
               <CardContent className="p-8 text-center">
+                {statusMessage && (
+                  <div
+                    className={`mb-4 rounded-lg border px-3 py-2 text-sm ${
+                      statusMessage.type === "error"
+                        ? "border-cv-error/40 bg-cv-error/10 text-cv-error"
+                        : "border-cv-success/40 bg-cv-success/10 text-cv-success"
+                    }`}
+                  >
+                    {statusMessage.text}
+                  </div>
+                )}
                 <div className="w-16 h-16 bg-cv-success/10 rounded-full flex items-center justify-center mx-auto mb-6">
                   <CheckCircle className="w-8 h-8 text-cv-success" />
                 </div>
@@ -85,7 +141,7 @@ export default function ForgotPassword() {
                 </p>
               </CardContent>
             </Card>
-          </motion.div>
+          </div>
         </div>
       </div>
     );
@@ -96,10 +152,7 @@ export default function ForgotPassword() {
       <Header />
 
       <div className="flex-grow flex items-center justify-center mx-auto px-4 py-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+        <div
           className="max-w-md mx-auto"
         >
           <Card className="glass-card">
@@ -115,6 +168,19 @@ export default function ForgotPassword() {
 
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-4">
+                {statusMessage && (
+                  <div
+                    className={`rounded-lg border px-3 py-2 text-sm ${
+                      statusMessage.type === "error"
+                        ? "border-cv-error/40 bg-cv-error/10 text-cv-error"
+                        : statusMessage.type === "success"
+                        ? "border-cv-success/40 bg-cv-success/10 text-cv-success"
+                        : "border-cv-text-secondary/30 bg-cv-bg-secondary/60 text-cv-text-secondary"
+                    }`}
+                  >
+                    {statusMessage.text}
+                  </div>
+                )}
                 <div className="space-y-2">
                   <Label htmlFor="email" className="text-cv-text-primary">
                     Email
@@ -165,7 +231,7 @@ export default function ForgotPassword() {
               </div>
             </CardContent>
           </Card>
-        </motion.div>
+        </div>
       </div>
       <Footer />
     </div>

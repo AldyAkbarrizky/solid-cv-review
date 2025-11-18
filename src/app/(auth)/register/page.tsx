@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "motion/react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -17,8 +16,10 @@ import Header from "@/components/layout/Header";
 import Link from "next/link";
 import { Eye, EyeOff, Mail, User, Lock } from "lucide-react";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function Register() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -29,28 +30,102 @@ export default function Register() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
+  const [termsError, setTermsError] = useState<string | null>(null);
+  const [statusMessage, setStatusMessage] = useState<{
+    type: "success" | "error" | "info";
+    text: string;
+  } | null>(null);
+
+  useEffect(() => {
+    if (
+      formData.confirmPassword &&
+      formData.password !== formData.confirmPassword
+    ) {
+      setPasswordError("Password tidak cocok!");
+    } else {
+      setPasswordError(null);
+    }
+  }, [formData.password, formData.confirmPassword]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setTermsError(null);
 
-    if (formData.password !== formData.confirmPassword) {
-      toast.error("Password tidak cocok!");
+    if (passwordError) {
+      setStatusMessage({
+        type: "error",
+        text: passwordError,
+      });
       return;
     }
 
     if (!acceptTerms) {
-      toast.error("Harap setujui syarat dan ketentuan!");
+      setTermsError("Anda harus menyetujui syarat dan ketentuan.");
+      setStatusMessage({
+        type: "error",
+        text: "Harap setujui syarat dan ketentuan untuk melanjutkan.",
+      });
       return;
     }
 
     setIsLoading(true);
+    setStatusMessage({
+      type: "info",
+      text: "Sedang mendaftarkan akun Anda...",
+    });
 
-    // Simulate API call
-    setTimeout(() => {
-      toast.success("Akun berhasil dibuat! Silakan login.");
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            password: formData.password,
+            password_confirm: formData.confirmPassword,
+          }),
+        }
+      );
+
+      const result = await response.json();
+
+      if (response.ok) {
+        const msg =
+          result?.data?.message ||
+          result?.message ||
+          "Akun berhasil dibuat! Silakan verifikasi email Anda.";
+        toast.success(msg);
+        setStatusMessage({
+          type: "success",
+          text: "Akun berhasil dibuat! Silakan verifikasi email Anda.",
+        });
+        router.push(
+          `/verify-email?status=pending&email=${encodeURIComponent(
+            formData.email
+          )}`
+        );
+      } else {
+        const msg =
+          result.message || "Gagal mendaftar. Silakan coba lagi.";
+        toast.error(msg);
+        setStatusMessage({ type: "error", text: msg });
+      }
+    } catch (error) {
+      console.error("Error registering:", error);
+      const msg = "Terjadi kesalahan. Silakan coba lagi.";
+      toast.error(msg);
+      setStatusMessage({ type: "error", text: msg });
+    } finally {
       setIsLoading(false);
-      // Redirect to login or dashboard
-    }, 2000);
+      setStatusMessage((current) =>
+        current?.type === "info" ? null : current
+      );
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,10 +141,7 @@ export default function Register() {
 
       <main className="flex-grow flex items-center justify-center">
         <div className="container-narrow w-full">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+          <div
             className="max-w-md mx-auto"
           >
             <Card className="glass-card py-5">
@@ -84,6 +156,19 @@ export default function Register() {
 
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-4">
+                  {statusMessage && (
+                    <div
+                      className={`rounded-lg border px-3 py-2 text-sm ${
+                        statusMessage.type === "error"
+                          ? "border-cv-error/40 bg-cv-error/10 text-cv-error"
+                          : statusMessage.type === "success"
+                          ? "border-cv-success/40 bg-cv-success/10 text-cv-success"
+                          : "border-cv-text-secondary/30 bg-cv-bg-secondary/60 text-cv-text-secondary"
+                      }`}
+                    >
+                      {statusMessage.text}
+                    </div>
+                  )}
                   <div className="space-y-2">
                     <Label htmlFor="name" className="text-cv-text-primary">
                       Nama Lengkap
@@ -186,35 +271,46 @@ export default function Register() {
                         )}
                       </button>
                     </div>
+                    {passwordError && (
+                      <p className="text-sm text-red-500">{passwordError}</p>
+                    )}
                   </div>
 
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-start space-x-2">
                     <Checkbox
                       id="terms"
                       checked={acceptTerms}
                       onCheckedChange={(checked) => {
                         setAcceptTerms(checked === true);
+                        if (checked) {
+                          setTermsError(null);
+                        }
                       }}
-                      className="border-cv-text-secondary/30"
+                      className="border-cv-text-secondary/30 mt-1"
                     />
-                    <Label
-                      htmlFor="terms"
-                      className="text-sm text-cv-text-secondary"
-                    >
-                      Saya setuju dengan{" "}
-                      <Link
-                        href="/privacy"
-                        className="text-cv-accent hover:underline"
+                    <div className="grid gap-1.5 leading-none">
+                      <Label
+                        htmlFor="terms"
+                        className="text-sm text-cv-text-secondary"
                       >
-                        syarat dan ketentuan
-                      </Link>
-                    </Label>
+                        Saya setuju dengan{" "}
+                        <Link
+                          href="/privacy"
+                          className="text-cv-accent hover:underline"
+                        >
+                          syarat dan ketentuan
+                        </Link>
+                      </Label>
+                      {termsError && (
+                        <p className="text-sm text-red-500">{termsError}</p>
+                      )}
+                    </div>
                   </div>
 
                   <Button
                     type="submit"
                     className="w-full btn-primary"
-                    disabled={isLoading}
+                    disabled={isLoading || passwordError !== null}
                   >
                     {isLoading ? "Mendaftar..." : "Daftar Sekarang"}
                   </Button>
@@ -233,7 +329,7 @@ export default function Register() {
                 </div>
               </CardContent>
             </Card>
-          </motion.div>
+          </div>
         </div>
       </main>
     </div>
