@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { CheckCircle, MailCheck, XCircle } from "lucide-react";
@@ -12,6 +12,26 @@ import { useAuth } from "@/context/auth-context";
 type ViewState = "pending" | "processing" | "success" | "error";
 
 export default function VerifyEmailPage() {
+  return (
+    <Suspense fallback={<VerifyEmailLoading />}>
+      <VerifyEmailContent />
+    </Suspense>
+  );
+}
+
+function VerifyEmailLoading() {
+  return (
+    <div className="min-h-screen bg-cv-bg-primary flex flex-col">
+      <Header />
+      <main className="flex-1 container-centered flex items-center justify-center py-12 text-cv-text-secondary">
+        Memuat halaman verifikasi...
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
+function VerifyEmailContent() {
   const params = useSearchParams();
   const router = useRouter();
   const token = params.get("token");
